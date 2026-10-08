@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -17,15 +18,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.retrofit.R
-import com.example.retrofit.ui.theme.Black3
-import com.example.retrofit.ui.theme.Gray
 
 @Composable
 fun InputFieldText(
@@ -37,28 +39,32 @@ fun InputFieldText(
     placeholder: String,
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        // Название поля (Email / Password) — прижато к левому краю
+    Column(modifier = modifier.width(315.dp)) {
         Text(
             text = label,
-            color = Gray,
+            color = Color(0xFF909090),
             fontSize = 14.sp,
-            fontFamily = FontFamily(Font(R.font.nunito_sans))
+            fontFamily = FontFamily(Font(R.font.nunito_sans)),
+            fontWeight = FontWeight.W400,
+            lineHeight = 14.sp,
+            // ИСПРАВЛЕНО: Прижимаем лейбл (Email/Password) строго к левому краю
+            textAlign = TextAlign.Left
         )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Поле ввода без системных внутренних отступов Material по бокам
         BasicTextField(
             value = value,
             onValueChange = onValueChange,
             singleLine = true,
             visualTransformation = visualTransformation,
             modifier = Modifier.fillMaxWidth(),
-            textStyle = androidx.compose.ui.text.TextStyle(
-                color = Black3,
+            textStyle = TextStyle(
+                color = Color(0xFF303030),
                 fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.nunito_sans))
+                fontFamily = FontFamily(Font(R.font.nunito_sans)),
+                // ИСПРАВЛЕНО: Вводимый пользователем текст теперь пишется строго слева
+                textAlign = TextAlign.Left
             ),
             decorationBox = { innerTextField ->
                 Row(
@@ -69,12 +75,14 @@ fun InputFieldText(
                         if (value.isEmpty()) {
                             Text(
                                 text = placeholder,
-                                color = Gray.copy(alpha = 0.5f),
+                                color = Color(0xFF909090).copy(alpha = 0.5f),
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.nunito_sans))
+                                fontFamily = FontFamily(Font(R.font.nunito_sans)),
+                                // ИСПРАВЛЕНО: Текст плейсхолдера (подсказки) теперь тоже строго слева
+                                textAlign = TextAlign.Left
                             )
                         }
-                        innerTextField() // Сам вводимый текст — встает четко с левого края
+                        innerTextField()
                     }
                     if (trailingIcon != null) {
                         trailingIcon()
@@ -85,7 +93,6 @@ fun InputFieldText(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Тонкая горизонтальная линия подчеркивания (Rectangle 6 в Figma)
         HorizontalDivider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 2.dp,
@@ -105,5 +112,4 @@ private fun InputFieldTextPrev() {
         placeholder = "example@mail.com",
         visualTransformation = VisualTransformation.None
     )
-
 }

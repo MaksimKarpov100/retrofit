@@ -15,7 +15,6 @@ fun TitleText(
     modifier: Modifier = Modifier,
     text: String,
     fontSize: Int
-
 ) {
     Text(
         modifier = modifier,
@@ -25,7 +24,6 @@ fun TitleText(
         letterSpacing = 0.sp,
         fontFamily = FontFamily(Font(R.font.nunito_sans)),
         lineHeight = 30.sp
-
     )
 }
 

@@ -31,6 +31,7 @@ fun ClickableText(
         fontFamily = FontFamily(Font(R.font.nunito_sans))
     )
 }
+
 @Preview(showSystemUi = true)
 @Composable
 private fun ClickableTextPrev() {
