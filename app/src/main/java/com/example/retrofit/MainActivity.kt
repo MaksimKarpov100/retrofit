@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.retrofit.data.model.Company
 import com.example.retrofit.data.model.User
 import com.example.retrofit.ui.theme.RetrofitTheme
+import com.example.retrofit.ui.theme.viewModel.ProductsViewModel
 import com.example.retrofit.ui.theme.viewmodel.RecipesViewModel
 import com.example.retrofit.ui.theme.viewmodel.UsersViewModel
 
@@ -21,19 +22,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             RetrofitTheme {
                 val recipesViewModel: RecipesViewModel = viewModel()
-                val usersViewModel: UsersViewModel = viewModel()
+                val productsViewModel: ProductsViewModel = viewModel()
 
                 recipesViewModel.loadRecipes()
-
-                val newUser = User(
-                    firstName = "Олег",
-                    lastName = "Павлов",
-                    company = Company(
-                        name = "Интел",
-                        title = "Менеджер по продажам"
-                    )
-                )
-                usersViewModel.addUser(newUser)
+                recipesViewModel.deleteRecipe()
+                productsViewModel.updateProduct(10)
             }
         }
     }

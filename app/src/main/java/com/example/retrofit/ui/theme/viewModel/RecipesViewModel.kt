@@ -18,7 +18,24 @@ class RecipesViewModel : ViewModel() {
                     Log.d("RecipesResponse", "rating: ${recipe.rating}")
                 }
             } catch (e: Exception) {
-                Log.e("RecipesResponse", "Ошибка: ${e.message}")
+                Log.e("RecipesResponse", "error: ${e.message}")
+            }
+        }
+    }
+
+    fun deleteRecipe() {
+        viewModelScope.launch {
+            try {
+                val deleted = RetrofitClient.recipeService.deleteRecipe(11)
+
+                Log.d("RecipesResponse", "--- deleted recipe ---")
+                Log.d("RecipesResponse", "id: ${deleted.id}")
+                Log.d("RecipesResponse", "name: ${deleted.name}")
+                Log.d("RecipesResponse", "difficulty: ${deleted.difficulty}")
+                Log.d("RecipesResponse", "rating: ${deleted.rating}")
+
+            } catch (e: Exception) {
+                Log.e("RecipesResponse", "error: ${e.message}")
             }
         }
     }
