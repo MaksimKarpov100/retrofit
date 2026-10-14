@@ -18,9 +18,9 @@ class ProductsViewModel: ViewModel() {
                 Log.d("ProductResponse", "id: ${beforeProduct.id}")
                 Log.d("ProductResponse", "title: ${beforeProduct.title}")
                 Log.d("ProductResponse", "price: ${beforeProduct.price}")
-                Log.d("ProductResponse", "width: ${beforeProduct.dimensions.width}")
-                Log.d("ProductResponse", "height: ${beforeProduct.dimensions.height}")
-                Log.d("ProductResponse", "depth: ${beforeProduct.dimensions.depth}")
+                Log.d("ProductResponse", "width: ${beforeProduct.dimensions?.width}")
+                Log.d("ProductResponse", "height: ${beforeProduct.dimensions?.height}")
+                Log.d("ProductResponse", "depth: ${beforeProduct.dimensions?.depth}")
                 Log.d("ProductResponse", "weight: ${beforeProduct.weight}")
 
                 val newProduct = beforeProduct.copy(
@@ -39,9 +39,9 @@ class ProductsViewModel: ViewModel() {
                 Log.d("ProductResponse", "id: ${afterProduct.id}")
                 Log.d("ProductResponse", "title: ${afterProduct.title}")
                 Log.d("ProductResponse", "price: ${afterProduct.price}")
-                Log.d("ProductResponse", "width: ${afterProduct.dimensions.width}")
-                Log.d("ProductResponse", "height: ${afterProduct.dimensions.height}")
-                Log.d("ProductResponse", "depth: ${afterProduct.dimensions.depth}")
+                Log.d("ProductResponse", "width: ${afterProduct.dimensions?.width}")
+                Log.d("ProductResponse", "height: ${afterProduct.dimensions?.height}")
+                Log.d("ProductResponse", "depth: ${afterProduct.dimensions?.depth}")
                 Log.d("ProductResponse", "weight: ${afterProduct.weight}")
 
             } catch (e: Exception) {

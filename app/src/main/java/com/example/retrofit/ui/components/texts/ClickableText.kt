@@ -37,7 +37,7 @@ fun ClickableText(
 private fun ClickableTextPrev() {
     ClickableText(
         onClick = {},
-        text = "adada",
-        fontSize = 18
+        text = "Hello!",
+        fontSize = 30
     )
 }

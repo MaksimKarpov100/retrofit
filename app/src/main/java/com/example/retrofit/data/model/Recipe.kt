@@ -4,5 +4,7 @@ data class Recipe(
     val id: Int? = null,
     val name: String,
     val difficulty: String,
-    val rating: Double
+    val rating: Double,
+    val isDeleted: Boolean = false,
+    val deletedOn: String? = null
 )

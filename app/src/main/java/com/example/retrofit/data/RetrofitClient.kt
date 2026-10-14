@@ -16,7 +16,7 @@ object RetrofitClient {
         Proxy.Type.HTTP,
         InetSocketAddress(
             "10.207.106.59",
-            3128    )
+            3128)
     )
 
     private val logging = HttpLoggingInterceptor().apply {
@@ -34,7 +34,14 @@ object RetrofitClient {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
+    private val swagger: Retrofit = Retrofit.Builder()
+        .baseUrl("http://10.207.106.59:8080/")
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
     val recipeService: RecipeService = retrofit.create(RecipeService::class.java)
     val userService: UserService = retrofit.create(UserService::class.java)
     val productService: ProductService = retrofit.create(ProductService::class.java)
+    val cartService: CartService = retrofit.create(CartService::class.java)
 }

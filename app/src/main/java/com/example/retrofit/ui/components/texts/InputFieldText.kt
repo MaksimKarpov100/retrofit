@@ -47,7 +47,6 @@ fun InputFieldText(
             fontFamily = FontFamily(Font(R.font.nunito_sans)),
             fontWeight = FontWeight.W400,
             lineHeight = 14.sp,
-            // ИСПРАВЛЕНО: Прижимаем лейбл (Email/Password) строго к левому краю
             textAlign = TextAlign.Left
         )
 
@@ -63,7 +62,6 @@ fun InputFieldText(
                 color = Color(0xFF303030),
                 fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.nunito_sans)),
-                // ИСПРАВЛЕНО: Вводимый пользователем текст теперь пишется строго слева
                 textAlign = TextAlign.Left
             ),
             decorationBox = { innerTextField ->
@@ -78,7 +76,6 @@ fun InputFieldText(
                                 color = Color(0xFF909090).copy(alpha = 0.5f),
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.nunito_sans)),
-                                // ИСПРАВЛЕНО: Текст плейсхолдера (подсказки) теперь тоже строго слева
                                 textAlign = TextAlign.Left
                             )
                         }

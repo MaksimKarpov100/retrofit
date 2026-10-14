@@ -18,9 +18,8 @@ class MainActivity : ComponentActivity() {
                 val recipesViewModel: RecipesViewModel = viewModel()
                 val productsViewModel: ProductsViewModel = viewModel()
 
-                recipesViewModel.loadRecipes()
                 recipesViewModel.deleteRecipe()
-                productsViewModel.updateProduct(10)
+                productsViewModel.updateProduct(93)
             }
         }
     }
