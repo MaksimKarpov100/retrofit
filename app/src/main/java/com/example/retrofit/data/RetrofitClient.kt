@@ -1,5 +1,7 @@
 package com.example.retrofit.data
 
+import com.example.retrofit.data.service.AuthService
+import com.example.retrofit.data.service.CartService
 import com.example.retrofit.data.service.ProductService
 import com.example.retrofit.data.service.RecipeService
 import com.example.retrofit.data.service.UserService
@@ -35,7 +37,7 @@ object RetrofitClient {
         .build()
 
     private val swagger: Retrofit = Retrofit.Builder()
-        .baseUrl("http://10.207.106.59:8080/")
+        .baseUrl("http://10.207.106.59:8090/api/collections/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -43,5 +45,6 @@ object RetrofitClient {
     val recipeService: RecipeService = retrofit.create(RecipeService::class.java)
     val userService: UserService = retrofit.create(UserService::class.java)
     val productService: ProductService = retrofit.create(ProductService::class.java)
-    val cartService: CartService = retrofit.create(CartService::class.java)
+    val authService: AuthService = swagger.create(AuthService::class.java)
+    val cartService: CartService = swagger.create(CartService::class.java)
 }

@@ -23,10 +23,10 @@ class RecipesViewModel : ViewModel() {
         }
     }
 
-    fun deleteRecipe() {
+    fun deleteRecipe(recipeId: Int) {
         viewModelScope.launch {
             try {
-                val deleted = RetrofitClient.recipeService.deleteRecipe(11)
+                val deleted = RetrofitClient.recipeService.deleteRecipe(recipeId)
                 Log.d("RecipesResponse", "--- deleted recipe ---")
                 Log.d("RecipesResponse", "id: ${deleted.id}")
                 Log.d("RecipesResponse", "name: ${deleted.name}")

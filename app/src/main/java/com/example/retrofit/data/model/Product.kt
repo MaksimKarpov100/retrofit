@@ -1,5 +1,4 @@
 package com.example.retrofit.data.model
-
 data class Product(
     val id: Int? = null,
     val title: String,
