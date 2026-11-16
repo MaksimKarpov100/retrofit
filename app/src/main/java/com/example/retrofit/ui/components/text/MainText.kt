@@ -1,4 +1,4 @@
-package com.example.retrofit.ui.components.texts
+package com.example.retrofit.ui.components.text
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

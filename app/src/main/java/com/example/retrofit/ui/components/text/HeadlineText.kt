@@ -1,4 +1,4 @@
-package com.example.retrofit.ui.components.texts
+package com.example.retrofit.ui.components.text
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -8,30 +8,28 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.retrofit.R
-import com.example.retrofit.ui.theme.Gray
+import com.example.retrofit.ui.theme.Black3
 
 @Composable
-fun TitleText(
+fun HeadlineText(
     modifier: Modifier = Modifier,
     text: String,
     fontSize: Int
 ) {
     Text(
-        modifier = modifier,
         text = text,
-        color = Gray,
+        color = Black3,
         fontSize = fontSize.sp,
-        letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.nunito_sans)),
-        lineHeight = 30.sp
+        letterSpacing = 0.5.sp,
+        fontFamily = FontFamily(Font(R.font.gelasio_medium_italic))
     )
 }
 
 @Preview(showSystemUi = true)
 @Composable
-private fun TitleTextPrev() {
-    TitleText(
-        text = "The best simple place where you discover most wonderful furnitures and make your home beautiful",
-        fontSize = 24
+private fun HeadlineTextPrev() {
+    HeadlineText(
+        text = "MAKE YOUR",
+        fontSize = 20
     )
 }

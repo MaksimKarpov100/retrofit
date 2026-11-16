@@ -1,4 +1,4 @@
-package com.example.retrofit.ui.components.texts
+package com.example.retrofit.ui.components.text
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

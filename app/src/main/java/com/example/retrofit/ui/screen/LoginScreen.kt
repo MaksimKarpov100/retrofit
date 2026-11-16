@@ -1,4 +1,4 @@
-package com.example.retrofit.ui.screens
+package com.example.retrofit.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -9,18 +9,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,19 +39,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.retrofit.R
-import com.example.retrofit.ui.components.buttons.MainButton
-import com.example.retrofit.ui.components.texts.ClickableText
-import com.example.retrofit.ui.components.texts.InputFieldText
+import com.example.retrofit.ui.components.button.MainButton
+import com.example.retrofit.ui.components.text.InputFieldText
 import com.example.retrofit.ui.theme.RetrofitTheme
 import com.example.retrofit.ui.theme.White
+import com.example.retrofit.ui.theme.viewModel.AuthViewModel
+import com.example.retrofit.ui.theme.viewModel.CartsViewModel
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    viewModel: AuthViewModel,
     onLoginClick: () -> Unit = {},
-    onSignUpClick: () -> Unit = {},
-    onForgotPasswordClick: () -> Unit = {}
 ) {
+
+    LaunchedEffect(viewModel.isSuccess) {
+        if (viewModel.isSuccess){
+            onLoginClick()
+        }
+    }
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -126,21 +130,6 @@ fun LoginScreen(
             style = TextStyle(lineHeight = 45.sp),
             modifier = Modifier.padding(start = 30.dp)
         )
-
-        Spacer(modifier = Modifier.height(25.dp))
-        ElevatedCard(
-            modifier = Modifier
-                .width(345.dp)
-                .heightIn(min = 437.dp)
-                .padding(start = 4.dp),
-            shape = RoundedCornerShape(4.dp),
-            colors = CardDefaults.elevatedCardColors(
-                containerColor = White
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 12.dp
-            )
-        ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -182,15 +171,6 @@ fun LoginScreen(
                     modifier = Modifier.padding(start = 26.dp)
                 )
 
-                Spacer(modifier = Modifier.height(35.dp))
-                Box(modifier = Modifier.width(345.dp), contentAlignment = Alignment.Center) {
-                    ClickableText(
-                        text = "Forgot Password",
-                        onClick = onForgotPasswordClick,
-                        fontSize = 18
-                    )
-                }
-
                 Spacer(modifier = Modifier.height(40.dp))
                 Row(
                     modifier = Modifier
@@ -204,24 +184,7 @@ fun LoginScreen(
                         textFontSize = 18
                     )
                 }
-
-                Spacer(modifier = Modifier.height(30.dp))
-                Box(modifier = Modifier.width(345.dp), contentAlignment = Alignment.Center) {
-                    ClickableText(
-                        text = "SIGN UP",
-                        onClick = onSignUpClick,
-                        fontSize = 18
-                    )
-                }
             }
         }
     }
-}
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-private fun LoginScreenPrev() {
-    RetrofitTheme {
-        LoginScreen()
-    }
-}

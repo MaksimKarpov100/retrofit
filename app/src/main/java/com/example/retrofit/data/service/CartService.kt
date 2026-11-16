@@ -7,5 +7,5 @@ import retrofit2.http.Header
 interface CartService {
 
     @GET("carts/records")
-    suspend fun getCart(@Header("Authorization") token: String?) : CartsResponse
+    suspend fun getCart(@Header("Authorization") token: String) : CartsResponse
 }

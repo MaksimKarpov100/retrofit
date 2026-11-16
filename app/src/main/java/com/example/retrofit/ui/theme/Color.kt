@@ -1,6 +1,7 @@
 package com.example.retrofit.ui.theme
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
@@ -17,8 +18,7 @@ val Red = Color(0xFFEB5757)
 val BlackFont = Color(0xFF303030)
 val Black3 = Color(0xFF606060)
 val Gray = Color(0xFF909090)
-
-val Gray4 = Color(0xFFBDBDBD)
-val Gray5 = Color(0xFFE0E0E0)
-
-val InputBg = Color(0xFFF5F5F9)
+val TextSecondary = Color(0xFF808080)
+val TextPrimary = Color(0xFF242424)
+val CardBackground = Color(0xFFFFFFFF)
+val ShadowColor = Color(0xFF8A95E).copy(0.2f)

@@ -2,7 +2,7 @@ package com.example.retrofit.data.service
 
 import com.example.retrofit.data.model.AuthResponse
 import com.example.retrofit.data.model.LoginRequest
-import com.example.retrofit.data.model.userRecord
+import com.example.retrofit.data.model.UserRecord
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -11,5 +11,5 @@ interface AuthService {
     suspend fun login(@Body request: LoginRequest) : AuthResponse
 
     @POST("users/records")
-    suspend fun createNewUser(@Body userRecord: userRecord) : userRecord
+    suspend fun createNewUser(@Body userRecord: UserRecord) : UserRecord
 }

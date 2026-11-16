@@ -1,4 +1,4 @@
-package com.example.retrofit.ui.screens
+package com.example.retrofit.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -16,11 +16,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.retrofit.ui.components.texts.HeadlineText
-import com.example.retrofit.ui.components.texts.MainText
-import com.example.retrofit.ui.components.texts.TitleText
+import com.example.retrofit.ui.components.text.HeadlineText
+import com.example.retrofit.ui.components.text.MainText
+import com.example.retrofit.ui.components.text.TitleText
 import com.example.retrofit.R
-import com.example.retrofit.ui.components.buttons.MainButton
+import com.example.retrofit.ui.components.button.MainButton
 
 @Composable
 fun BoardingScreen(modifier: Modifier = Modifier) {

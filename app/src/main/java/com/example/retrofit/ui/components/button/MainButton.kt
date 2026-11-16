@@ -1,4 +1,4 @@
-package com.example.retrofit.ui.components.buttons
+package com.example.retrofit.ui.components.button
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -67,7 +67,7 @@ fun MainButton(
 @Composable
 private fun MainButtonPrev() {
     MainButton(
-        textInButton = "Get Started",
+        textInButton = "Log in",
         textFontSize = 18
     )
 }
