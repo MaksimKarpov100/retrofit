@@ -7,4 +7,3 @@ object LoginRoute
 
 @Serializable
 object CartsRoute
-

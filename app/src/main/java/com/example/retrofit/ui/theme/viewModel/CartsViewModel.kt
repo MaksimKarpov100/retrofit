@@ -1,6 +1,5 @@
 package com.example.retrofit.ui.theme.viewModel
 
-import android.media.session.MediaSession
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,8 +15,12 @@ import kotlinx.coroutines.launch
 class CartsViewModel : ViewModel() {
 
     var carts by mutableStateOf<List<Cart>>(emptyList())
+    var isLoading by mutableStateOf(false)
+    var errorMessage by mutableStateOf<String?>(null)
+
     fun getCart(loginRequest: LoginRequest) {
         viewModelScope.launch {
+            isLoading = true
             try {
                 val auth = RetrofitClient.authService.login(loginRequest)
                 val token = auth.token
@@ -25,38 +28,35 @@ class CartsViewModel : ViewModel() {
                 Log.d("CartsViewModel", "Токен сохранен")
                 val savedToken = TokenManager.getToken()
                 if (savedToken != null) {
-                    val carts = RetrofitClient.cartService.getCart(savedToken)
-                    for (cart in carts.items) {
-                        Log.d(
-                            "CartsViewModel", "id: ${cart.id}\n" +
-                                    " totalProducts: ${cart.totalProducts}\n" +
-                                    " total: ${cart.total}\n" +
-                                    " created: ${cart.created}\n" +
-                                    " updated: ${cart.updated}\n" +
-                                    " page: ${carts.page}\n" +
-                                    " perPage: ${carts.perPage}\n" +
-                                    " totalItems: ${carts.totalItems}\n" +
-                                    " totalPages: ${carts.totalPages}"
-                        )
+                    val response = RetrofitClient.cartService.getCart(savedToken)
+                    carts = response.items
+                    for (cart in response.items) {
+                        Log.d("CartsViewModel", "id: ${cart.id}, total: ${cart.total}")
                     }
-                } else {
-                    Log.d("AUTH", "Ошибка авторизации")
                 }
             } catch (ex: Exception) {
-                Log.d("CartsViewModel", "${ex.message}")
+                Log.d("CartsViewModel", "Ошибка: ${ex.message}")
+                errorMessage = ex.message
+            } finally {
+                isLoading = false
             }
         }
     }
-    fun loadCarts(){
+
+    fun loadCarts() {
         viewModelScope.launch {
-            try{
+            isLoading = true
+            try {
                 val token = TokenManager.getToken()
-                if (token != null){
+                if (token != null) {
                     val response = RetrofitClient.cartService.getCart(token)
                     carts = response.items
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("Carts", "Ошибка ${e.message}")
+                errorMessage = e.message
+            } finally {
+                isLoading = false
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.retrofit.ui.screen.CartScreen
-import com.example.retrofit.ui.screen.LoginScreen
+import com.example.retrofit.ui.screen.LoginScreen // Проверь импорт!
 import com.example.retrofit.ui.theme.viewModel.AuthViewModel
 
 @Composable
@@ -22,15 +22,15 @@ fun AppNavGraph() {
 
             LoginScreen(
                 viewModel = authViewModel,
-                onLoginClick = {
-                            navController.navigate(CartsRoute) {
-                                popUpTo(LoginRoute) {inclusive = true}
-                            }
+                onLoginSuccess = {
+                    navController.navigate(CartsRoute) {
+                        popUpTo<LoginRoute> { inclusive = true }
+                    }
                 }
             )
         }
 
-        composable<CartsRoute>{
+        composable<CartsRoute> {
             CartScreen()
         }
     }

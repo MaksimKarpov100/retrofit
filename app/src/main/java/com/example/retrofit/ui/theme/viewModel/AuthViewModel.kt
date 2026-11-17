@@ -9,57 +9,44 @@ import androidx.lifecycle.viewModelScope
 import com.example.retrofit.data.RetrofitClient
 import com.example.retrofit.data.TokenManager
 import com.example.retrofit.data.model.LoginRequest
-import com.example.retrofit.data.model.UserRecord
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
 
     var isLoading by mutableStateOf(false)
-    var errorMesage by mutableStateOf<String?>(null)
+        private set
     var isSuccess by mutableStateOf(false)
+        private set
+    var errorMessage by mutableStateOf<String?>(null)
+        private set
 
-    fun createNewUser(userRecord: UserRecord){
-        viewModelScope.launch{
-            try {
-                val newUser = RetrofitClient.authService.createNewUser(userRecord)
-                Log.d("AuthViewModel", "${newUser.email}, ${newUser.password}")
-
-            } catch (ex: Exception) {
-                Log.e("AuthViewModel", "${ex.message}")
-            }
-        }
-
-    }
-
-    fun login(email: String, password: String){
+    fun login(email: String, password: String) {
         viewModelScope.launch {
             isLoading = true
-            errorMesage = null
+            errorMessage = null
             isSuccess = false
 
-            try{
+            try {
                 val response = RetrofitClient.authService.login(
                     LoginRequest(identity = email, password = password)
                 )
-
                 val token = response.token
-                Log.d("AUTH", "Токен получен: $token")
+                TokenManager.saveToken(token)
+                Log.d("AUTH", "Успешный вход. Токен: $token")
 
-                TokenManager.saveToken((token))
                 isSuccess = true
 
-            } catch (ex: Exception) {
-                Log.e("AUTH", "Ошибка авторизации${ex.message}")
-                errorMesage = ex.message ?: "Ошибка подключения к серверу"
+            } catch (e: Exception) {
+                Log.e("AUTH", "Ошибка авторизации: ${e.message}")
+
+                errorMessage = "Неверный логин или пароль"
+
             } finally {
                 isLoading = false
             }
         }
     }
-
-    fun clearError(){
-        errorMesage = null
+    fun clearError() {
+        errorMessage = null
     }
-
-
 }
