@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                 val getCartsViewModel: CartsViewModel = viewModel()
 
                 LaunchedEffect(Unit) {
-                    getCartsViewModel.getCart(login)
+                    getCartsViewModel.loadCarts()
 
                 }
             }

@@ -9,39 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.retrofit.data.RetrofitClient
 import com.example.retrofit.data.TokenManager
 import com.example.retrofit.data.model.Cart
-import com.example.retrofit.data.model.LoginRequest
 import kotlinx.coroutines.launch
 
 class CartsViewModel : ViewModel() {
-
     var carts by mutableStateOf<List<Cart>>(emptyList())
     var isLoading by mutableStateOf(false)
-    var errorMessage by mutableStateOf<String?>(null)
-
-    fun getCart(loginRequest: LoginRequest) {
-        viewModelScope.launch {
-            isLoading = true
-            try {
-                val auth = RetrofitClient.authService.login(loginRequest)
-                val token = auth.token
-                TokenManager.saveToken(token)
-                Log.d("CartsViewModel", "Токен сохранен")
-                val savedToken = TokenManager.getToken()
-                if (savedToken != null) {
-                    val response = RetrofitClient.cartService.getCart(savedToken)
-                    carts = response.items
-                    for (cart in response.items) {
-                        Log.d("CartsViewModel", "id: ${cart.id}, total: ${cart.total}")
-                    }
-                }
-            } catch (ex: Exception) {
-                Log.d("CartsViewModel", "Ошибка: ${ex.message}")
-                errorMessage = ex.message
-            } finally {
-                isLoading = false
-            }
-        }
-    }
+    var editableCart by mutableStateOf<Cart?>(null)
+    var isSaving by mutableStateOf(false)
 
     fun loadCarts() {
         viewModelScope.launch {
@@ -49,14 +23,46 @@ class CartsViewModel : ViewModel() {
             try {
                 val token = TokenManager.getToken()
                 if (token != null) {
-                    val response = RetrofitClient.cartService.getCart(token)
-                    carts = response.items
+                    carts = RetrofitClient.cartService.getCarts(token).items
                 }
             } catch (e: Exception) {
-                Log.e("Carts", "Ошибка ${e.message}")
-                errorMessage = e.message
+                Log.e("CartsVM", "Ошибка загрузки списка: ${e.message}")
             } finally {
                 isLoading = false
+            }
+        }
+    }
+    fun loadCartById(id: String) {
+        viewModelScope.launch {
+            isLoading = true
+            try {
+                val token = TokenManager.getToken()
+                if (token != null) {
+                    editableCart = RetrofitClient.cartService.getCartById(token, id)
+                }
+            } catch (e: Exception) {
+                Log.e("CartsVM", "Ошибка загрузки объекта: ${e.message}")
+            } finally {
+                isLoading = false
+            }
+        }
+    }
+
+    fun saveCart(id: String, newTotal: Double, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            isSaving = true
+            try {
+                val token = TokenManager.getToken()
+                val current = editableCart
+                if (token != null && current != null) {
+                    val updatedCart = current.copy(total = newTotal)
+                    RetrofitClient.cartService.updateCart(token, id, updatedCart)
+                    onSuccess()
+                }
+            } catch (e: Exception) {
+                Log.e("CartsVM", "Ошибка сохранения: ${e.message}")
+            } finally {
+                isSaving = false
             }
         }
     }
