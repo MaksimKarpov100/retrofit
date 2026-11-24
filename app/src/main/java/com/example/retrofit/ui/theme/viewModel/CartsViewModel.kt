@@ -13,13 +13,10 @@ import kotlinx.coroutines.launch
 
 class CartsViewModel : ViewModel() {
     var carts by mutableStateOf<List<Cart>>(emptyList())
-    var isLoading by mutableStateOf(false)
     var editableCart by mutableStateOf<Cart?>(null)
-    var isSaving by mutableStateOf(false)
 
     fun loadCarts() {
         viewModelScope.launch {
-            isLoading = true
             try {
                 val token = TokenManager.getToken()
                 if (token != null) {
@@ -27,14 +24,12 @@ class CartsViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 Log.e("CartsVM", "Ошибка загрузки списка: ${e.message}")
-            } finally {
-                isLoading = false
             }
         }
     }
+
     fun loadCartById(id: String) {
         viewModelScope.launch {
-            isLoading = true
             try {
                 val token = TokenManager.getToken()
                 if (token != null) {
@@ -42,15 +37,12 @@ class CartsViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 Log.e("CartsVM", "Ошибка загрузки объекта: ${e.message}")
-            } finally {
-                isLoading = false
             }
         }
     }
 
     fun saveCart(id: String, newTotal: Double, onSuccess: () -> Unit) {
         viewModelScope.launch {
-            isSaving = true
             try {
                 val token = TokenManager.getToken()
                 val current = editableCart
@@ -61,8 +53,6 @@ class CartsViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 Log.e("CartsVM", "Ошибка сохранения: ${e.message}")
-            } finally {
-                isSaving = false
             }
         }
     }

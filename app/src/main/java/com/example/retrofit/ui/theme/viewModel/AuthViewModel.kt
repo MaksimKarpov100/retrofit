@@ -9,20 +9,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.retrofit.data.RetrofitClient
 import com.example.retrofit.data.TokenManager
 import com.example.retrofit.data.model.LoginRequest
+import com.example.retrofit.data.model.UserRecord
 import kotlinx.coroutines.launch
 
 class AuthViewModel : ViewModel() {
 
-    var isLoading by mutableStateOf(false)
-        private set
     var isSuccess by mutableStateOf(false)
-        private set
     var errorMessage by mutableStateOf<String?>(null)
-        private set
+    var currentUser by mutableStateOf<UserRecord?>(null)
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
-            isLoading = true
             errorMessage = null
             isSuccess = false
 
@@ -30,22 +27,25 @@ class AuthViewModel : ViewModel() {
                 val response = RetrofitClient.authService.login(
                     LoginRequest(identity = email, password = password)
                 )
-                val token = response.token
-                TokenManager.saveToken(token)
-                Log.d("AUTH", "Успешный вход. Токен: $token")
-
+                TokenManager.saveToken(response.token)
+                currentUser = response.record
                 isSuccess = true
-
             } catch (e: Exception) {
                 Log.e("AUTH", "Ошибка авторизации: ${e.message}")
-
                 errorMessage = "Неверный логин или пароль"
-
-            } finally {
-                isLoading = false
             }
         }
     }
+
+    fun logout(onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            TokenManager.saveToken("")
+            currentUser = null
+            isSuccess = false
+            onSuccess()
+        }
+    }
+
     fun clearError() {
         errorMessage = null
     }

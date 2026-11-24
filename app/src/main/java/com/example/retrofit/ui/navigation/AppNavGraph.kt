@@ -1,8 +1,5 @@
 package com.example.retrofit.ui.navigation
 
-import CartsRoute
-import EditCartRoute
-import LoginRoute
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -12,19 +9,19 @@ import androidx.navigation.toRoute
 import com.example.retrofit.ui.screen.CartScreen
 import com.example.retrofit.ui.screen.EditCartScreen
 import com.example.retrofit.ui.screen.LoginScreen
+import com.example.retrofit.ui.screen.ProfileScreen
 import com.example.retrofit.ui.theme.viewModel.AuthViewModel
 
 @Composable
 fun AppNavGraph() {
     val navController = rememberNavController()
+    val authViewModel: AuthViewModel = viewModel()
 
     NavHost(
         navController = navController,
         startDestination = LoginRoute
     ) {
         composable<LoginRoute> {
-            val authViewModel: AuthViewModel = viewModel()
-
             LoginScreen(
                 viewModel = authViewModel,
                 onLoginSuccess = {
@@ -39,6 +36,9 @@ fun AppNavGraph() {
             CartScreen(
                 onItemClick = { id ->
                     navController.navigate(EditCartRoute(cartId = id))
+                },
+                onProfileClick = {
+                    navController.navigate(ProfileRoute)
                 }
             )
         }
@@ -50,6 +50,25 @@ fun AppNavGraph() {
                 cartId = route.cartId,
                 onBack = {
                     navController.popBackStack()
+                }
+            )
+        }
+
+        composable<ProfileRoute> {
+            ProfileScreen(
+                user = authViewModel.currentUser,
+                onHomeClick = {
+                    navController.popBackStack()
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onLogoutClick = {
+                    authViewModel.logout {
+                        navController.navigate(LoginRoute) {
+                            popUpTo<CartsRoute> { inclusive = true }
+                        }
+                    }
                 }
             )
         }

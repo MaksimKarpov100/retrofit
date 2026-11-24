@@ -32,12 +32,11 @@ fun MainButton(
         onClick = onClick,
         enabled = enabled,
         modifier = modifier
-            .width(285.dp)
+            .width(335.dp)
             .height(50.dp)
             .shadow(
-                elevation = 20.dp,
+                elevation = 10.dp,
                 shape = RoundedCornerShape(8.dp),
-                clip = false,
                 ambientColor = Color(0x40303030),
                 spotColor = Color(0x40303030)
             ),
@@ -62,6 +61,7 @@ fun MainButton(
         )
     }
 }
+
 
 @Preview(showSystemUi = true)
 @Composable

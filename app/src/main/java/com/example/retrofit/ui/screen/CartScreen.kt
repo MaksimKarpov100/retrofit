@@ -4,53 +4,121 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.retrofit.data.model.Cart
+import com.example.retrofit.R
+import com.example.retrofit.ui.components.BottomBar
+import com.example.retrofit.ui.components.HeaderBar
 import com.example.retrofit.ui.components.cart.CartCard
 import com.example.retrofit.ui.theme.RetrofitTheme
 import com.example.retrofit.ui.theme.viewModel.CartsViewModel
 
 @Composable
 fun CartScreen(
-    cartsViewModel: CartsViewModel? = viewModel(),
-    onItemClick: (String) -> Unit = {}
+    onItemClick: (String) -> Unit,
+    onProfileClick: () -> Unit = {},
+    cartsViewModel: CartsViewModel? = viewModel()
 ) {
     LaunchedEffect(Unit) {
         cartsViewModel?.loadCarts()
     }
 
-    val carts = cartsViewModel?.carts ?: listOf(
-        Cart("1", 4, 100.0, "", ""),
-        Cart("2", 2, 45.5, "", "")
-    )
+    val carts = cartsViewModel?.carts ?: emptyList()
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF7F7F7))
-            .padding(top = 24.dp),
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
-        items(carts) { cart ->
-            CartCard(
-                cart = cart,
-                onClick = { onItemClick(cart.id) }
+    Scaffold(
+        topBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White)
+                    .statusBarsPadding()
+                    .padding(vertical = 4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                HeaderBar(
+                    title = "",
+                    leftIconRes = R.drawable.search_icon,
+                    rightIconRes = R.drawable.order
+                )
+
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            SpanStyle(
+                                color = Color(0xFF909090),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                        ) {
+                            append("Make home\n")
+                        }
+                        withStyle(
+                            SpanStyle(
+                                color = Color(0xFF242424),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        ) {
+                            append("BEAUTIFUL")
+                        }
+                    },
+                    textAlign = TextAlign.Center,
+                    lineHeight = 25.sp,
+                    fontFamily = FontFamily(Font(R.font.gelasio))
+                )
+
+            }
+        },
+        bottomBar = {
+            BottomBar(
+                selectedTab = 0,
+                onTabSelected = { index ->
+                    if (index == 3) onProfileClick()
+                }
             )
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFFF5F5F5))
+                .padding(innerPadding),
+            contentPadding = PaddingValues(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(carts) { cart ->
+                CartCard(
+                    cart = cart,
+                    onClick = { onItemClick(cart.id) }
+                )
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun CartScreenPreview() {
     RetrofitTheme {
-        CartScreen(cartsViewModel = null)
+        CartScreen(
+            onItemClick = {},
+            cartsViewModel = null
+        )
     }
 }

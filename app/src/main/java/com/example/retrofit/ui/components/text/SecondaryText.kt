@@ -3,35 +3,36 @@ package com.example.retrofit.ui.components.text
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.example.retrofit.R
-import com.example.retrofit.ui.theme.Gray
 
 @Composable
-fun TitleText(
-    modifier: Modifier = Modifier,
+fun SecondaryText(
     text: String,
-    fontSize: Int
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFF808080),
+    fontSize: TextUnit = 14.sp,
+    fontWeight: FontWeight = FontWeight.Normal
 ) {
     Text(
-        modifier = modifier,
         text = text,
-        color = Gray,
-        fontSize = fontSize.sp,
-        letterSpacing = 0.sp,
+        modifier = modifier,
+        color = color,
+        fontSize = fontSize,
         fontFamily = FontFamily(Font(R.font.nunito_sans)),
-        lineHeight = 30.sp
+        fontWeight = fontWeight
     )
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
-private fun TitleTextPrev() {
-    TitleText(
-        text = "The best simple place where you discover most wonderful furnitures and make your home beautiful",
-        fontSize = 24
-    )
+private fun SecondaryTextPrev() {
+    SecondaryText(text = "HELLO")
+
 }
