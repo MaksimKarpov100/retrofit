@@ -19,17 +19,18 @@ fun PrimaryText(
     color: Color = Color(0xFF303030),
     fontSize: TextUnit = 24.sp,
     fontWeight: FontWeight = FontWeight.Bold,
-    letterSpacing: TextUnit = 1.2.sp
+    letterSpacing: TextUnit = 1.2.sp,
+    fontFamily: FontFamily = FontFamily(
+        Font(R.font.merriweather, FontWeight.Normal),
+        Font(R.font.merriweather_bold, FontWeight.Bold)
+    )
 ) {
     Text(
         text = text,
         modifier = modifier,
         color = color,
         fontSize = fontSize,
-        fontFamily = FontFamily(
-            Font(R.font.merriweather, FontWeight.Normal),
-            Font(R.font.merriweather_bold, FontWeight.Bold)
-        ),
+        fontFamily = fontFamily,
         fontWeight = fontWeight,
         letterSpacing = letterSpacing,
         lineHeight = 45.sp

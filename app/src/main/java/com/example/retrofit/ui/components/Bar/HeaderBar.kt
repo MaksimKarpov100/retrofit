@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,8 +61,9 @@ fun HeaderBar(
             color = Color(0xFF303030),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            letterSpacing = 0.sp
-        )
+            letterSpacing = 0.sp,
+            fontFamily = FontFamily(Font(R.font.merriweather)),
+            )
 
         if (rightIconRes != null) {
             Icon(

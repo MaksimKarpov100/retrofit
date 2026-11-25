@@ -84,19 +84,15 @@ fun LoginScreen(
 
         PrimaryText(
             text = "Hello !",
+            modifier = Modifier.padding(start = 10.dp),
             color = Color(0xFF909090),
             fontSize = 30.sp,
             fontWeight = FontWeight.Normal,
             letterSpacing = 0.sp,
-            modifier = Modifier.padding(start = 10.dp)
         )
         PrimaryText(
             text = "WELCOME BACK",
-            color = Color(0xFF303030),
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 1.2.sp,
-            modifier = Modifier.padding(start = 10.dp)
+            modifier = Modifier.padding(start = 10.dp),
         )
 
         Spacer(modifier = Modifier.height(35.dp))
