@@ -51,18 +51,23 @@ fun BottomBar(
         ) {
             for (index in 0..3) {
                 val iconRes = if (selectedTab == index) activeIcons[index] else inactiveIcons[index]
-                Icon(
-                    painter = painterResource(id = iconRes),
-                    contentDescription = null,
-                    tint = Color.Unspecified,
+                Box(
                     modifier = Modifier
-                        .size(24.dp)
+                        .size(48.dp)
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
                             indication = null,
                             onClick = { onTabSelected(index) }
-                        )
-                )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = painterResource(id = iconRes),
+                        contentDescription = "Иконка",
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     }
