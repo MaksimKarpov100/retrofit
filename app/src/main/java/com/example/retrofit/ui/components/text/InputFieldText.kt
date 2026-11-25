@@ -32,7 +32,7 @@ fun InputFieldText(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(64.dp)
+            .heightIn(min = 66.dp)
             .shadow(16.dp, RoundedCornerShape(4.dp), ambientColor = Color(0x338A959E), spotColor = Color(0x338A959E))
             .background(Color(0xFFFFFFFF), RoundedCornerShape(4.dp))
             .padding(start = 16.dp, end = 8.dp),
@@ -41,7 +41,7 @@ fun InputFieldText(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(vertical = 12.dp)
+                .padding(vertical = 8.dp)
         ) {
             SecondaryText(
                 text = label,
@@ -49,8 +49,7 @@ fun InputFieldText(
                 color = Color(0xFF808080)
             )
 
-            Spacer(modifier = Modifier.height(5.dp))
-
+            Spacer(modifier = Modifier.height(3.dp))
             BasicTextField(
                 value = value,
                 onValueChange = onValueChange,
