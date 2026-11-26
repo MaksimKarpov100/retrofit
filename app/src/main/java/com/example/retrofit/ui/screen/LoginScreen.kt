@@ -88,14 +88,13 @@ fun LoginScreen(
             modifier = Modifier.padding(start = 10.dp),
             color = Color(0xFF909090),
             fontSize = 30.sp,
-            letterSpacing = 0.sp,
-            fontFamily = FontFamily(Font(R.font.merriweather, weight = FontWeight(400))),
+            fontWeight = FontWeight.Normal,
+            letterSpacing = 0.sp
         )
         PrimaryText(
             text = "WELCOME BACK",
-            modifier = Modifier.padding(start = 10.dp),
-            fontFamily = FontFamily(Font(R.font.merriweather_bold, weight = FontWeight(700))),
-            )
+            modifier = Modifier.padding(start = 10.dp)
+        )
 
         Spacer(modifier = Modifier.height(35.dp))
         InputFieldText(

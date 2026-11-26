@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.retrofit.R
-import com.example.retrofit.ui.components.BottomBar
 import com.example.retrofit.ui.components.HeaderBar
 import com.example.retrofit.ui.components.cart.CartCard
 import com.example.retrofit.ui.theme.RetrofitTheme
@@ -32,7 +30,6 @@ import com.example.retrofit.ui.theme.viewModel.CartsViewModel
 @Composable
 fun CartScreen(
     onItemClick: (String) -> Unit,
-    onProfileClick: () -> Unit = {},
     cartsViewModel: CartsViewModel? = viewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -41,64 +38,54 @@ fun CartScreen(
 
     val carts = cartsViewModel?.carts ?: emptyList()
 
-    Scaffold(
-        topBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.White)
-                    .statusBarsPadding()
-                    .padding(vertical = 4.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                HeaderBar(
-                    title = "",
-                    leftIconRes = R.drawable.search_icon,
-                    rightIconRes = R.drawable.order
-                )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF5F5F5))
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.White)
+                .statusBarsPadding()
+                .padding(vertical = 4.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            HeaderBar(
+                title = "",
+                leftIconRes = R.drawable.search_icon,
+                rightIconRes = R.drawable.order
+            )
 
-                Text(
-                    text = buildAnnotatedString {
-                        withStyle(
-                            SpanStyle(
-                                color = Color(0xFF909090),
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Normal
-                            )
-                        ) {
-                            append("Make home\n")
-                        }
-                        withStyle(
-                            SpanStyle(
-                                color = Color(0xFF242424),
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        ) {
-                            append("BEAUTIFUL")
-                        }
-                    },
-                    textAlign = TextAlign.Center,
-                    lineHeight = 25.sp,
-                    fontFamily = FontFamily(Font(R.font.gelasio))
-                )
-
-            }
-        },
-        bottomBar = {
-            BottomBar(
-                selectedTab = 0,
-                onTabSelected = { index ->
-                    if (index == 3) onProfileClick()
-                }
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(
+                        SpanStyle(
+                            color = Color(0xFF909090),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal
+                        )
+                    ) {
+                        append("Make home\n")
+                    }
+                    withStyle(
+                        SpanStyle(
+                            color = Color(0xFF242424),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    ) {
+                        append("BEAUTIFUL")
+                    }
+                },
+                textAlign = TextAlign.Center,
+                lineHeight = 25.sp,
+                fontFamily = FontFamily(Font(R.font.gelasio))
             )
         }
-    ) { innerPadding ->
+
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFFF5F5F5))
-                .padding(innerPadding),
+            modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(20.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {

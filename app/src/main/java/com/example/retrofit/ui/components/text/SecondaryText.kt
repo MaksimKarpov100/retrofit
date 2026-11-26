@@ -25,7 +25,7 @@ fun SecondaryText(
         modifier = modifier,
         color = color,
         fontSize = fontSize,
-        fontFamily = FontFamily(Font(R.font.merriweather)),
+        fontFamily = FontFamily(Font(R.font.merriweather_light)),
         fontWeight = fontWeight
     )
 }

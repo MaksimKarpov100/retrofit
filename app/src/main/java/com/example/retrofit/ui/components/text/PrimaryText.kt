@@ -21,7 +21,7 @@ fun PrimaryText(
     fontWeight: FontWeight = FontWeight.Bold,
     letterSpacing: TextUnit = 1.2.sp,
     fontFamily: FontFamily = FontFamily(
-        Font(R.font.merriweather, FontWeight.Normal),
+        Font(R.font.merriweather_light, FontWeight.Normal),
         Font(R.font.merriweather_bold, FontWeight.Bold)
     )
 ) {

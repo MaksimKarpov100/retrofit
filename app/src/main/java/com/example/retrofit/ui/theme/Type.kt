@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.example.retrofit.R
 
 val MerriweatherFontFamily = FontFamily(
-    Font(R.font.merriweather, FontWeight.Normal),
+    Font(R.font.merriweather_light, FontWeight.Normal),
     Font(R.font.merriweather_bold, FontWeight.Bold)
 )
 

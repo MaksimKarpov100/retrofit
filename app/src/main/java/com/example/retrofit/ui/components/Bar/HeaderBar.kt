@@ -62,7 +62,7 @@ fun HeaderBar(
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
             letterSpacing = 0.sp,
-            fontFamily = FontFamily(Font(R.font.merriweather)),
+            fontFamily = FontFamily(Font(R.font.merriweather_light)),
             )
 
         if (rightIconRes != null) {
