@@ -12,7 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -57,7 +60,6 @@ fun LoginScreen(
         horizontalAlignment = Alignment.Start
     ) {
         Spacer(modifier = Modifier.height(35.dp))
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -81,34 +83,34 @@ fun LoginScreen(
         }
 
         Spacer(modifier = Modifier.height(35.dp))
-
         PrimaryText(
             text = "Hello !",
             modifier = Modifier.padding(start = 10.dp),
             color = Color(0xFF909090),
             fontSize = 30.sp,
-            fontWeight = FontWeight.Normal,
             letterSpacing = 0.sp,
+            fontFamily = FontFamily(Font(R.font.merriweather, weight = FontWeight(400))),
         )
         PrimaryText(
             text = "WELCOME BACK",
             modifier = Modifier.padding(start = 10.dp),
-        )
+            fontFamily = FontFamily(Font(R.font.merriweather_bold, weight = FontWeight(700))),
+            )
 
         Spacer(modifier = Modifier.height(35.dp))
-
         InputFieldText(
             value = email,
             label = "Email",
-            onValueChange = { email = it }
+            onValueChange = { email = it },
+            modifier = Modifier.testTag("FieldEmail")
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-
         InputFieldText(
             value = password,
             label = "Password",
             onValueChange = { password = it },
+            modifier = Modifier.testTag("FieldPassword"),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -122,12 +124,13 @@ fun LoginScreen(
         )
 
         Spacer(modifier = Modifier.height(35.dp))
-
         MainButton(
             textInButton = "Log in",
             onClick = { viewModel?.login(email, password) },
             modifier = Modifier.fillMaxWidth()
+                .testTag("ButtonLogin")
         )
+
     }
 }
 

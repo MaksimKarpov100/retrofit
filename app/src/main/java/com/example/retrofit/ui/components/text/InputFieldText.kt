@@ -30,7 +30,7 @@ fun InputFieldText(
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     Row(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 66.dp)
             .shadow(16.dp, RoundedCornerShape(4.dp), ambientColor = Color(0x338A959E), spotColor = Color(0x338A959E))
@@ -55,7 +55,7 @@ fun InputFieldText(
                 onValueChange = onValueChange,
                 singleLine = true,
                 visualTransformation = visualTransformation,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = modifier.fillMaxWidth(),
                 textStyle = TextStyle(
                     color = Color(0xFF242424),
                     fontSize = 14.sp,

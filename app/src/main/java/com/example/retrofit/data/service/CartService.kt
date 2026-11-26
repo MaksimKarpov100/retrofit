@@ -9,16 +9,16 @@ import retrofit2.http.PATCH
 import retrofit2.http.Path
 
 interface CartService {
-    @GET("collections/carts/records")
-    suspend fun getCarts(@Header("Authorization") token: String): CartsResponse
+    @GET("carts/records")
+    suspend fun getCarts(@Header("Authorization") token: String?): CartsResponse
 
-    @GET("collections/carts/records/{id}")
+    @GET("carts/records/{id}")
     suspend fun getCartById(
         @Header("Authorization") token: String,
         @Path("id") id: String
     ): Cart
 
-    @PATCH("collections/carts/records/{id}")
+    @PATCH("carts/records/{id}")
     suspend fun updateCart(
         @Header("Authorization") token: String,
         @Path("id") id: String,

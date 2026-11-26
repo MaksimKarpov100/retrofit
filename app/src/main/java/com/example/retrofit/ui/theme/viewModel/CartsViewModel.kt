@@ -19,8 +19,18 @@ class CartsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val token = TokenManager.getToken()
+                val response = RetrofitClient.cartService.getCarts(token)
                 if (token != null) {
                     carts = RetrofitClient.cartService.getCarts(token).items
+                    for (cart in response.items) {
+                        Log.d("CARTS", "id: ${cart.id}")
+                        Log.d("CARTS", "totalProducts: ${cart.totalProducts}")
+                        Log.d("CARTS", "total: ${cart.total}")
+                        Log.d("CARTS", "created: ${cart.created}")
+                        Log.d("CARTS", "updated: ${cart.updated}")
+                    }
+                } else {
+                    Log.d("", "Ошибка! Токен пуст")
                 }
             } catch (e: Exception) {
                 Log.e("CartsVM", "Ошибка загрузки списка: ${e.message}")

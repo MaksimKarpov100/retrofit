@@ -30,6 +30,7 @@ class AuthViewModel : ViewModel() {
                 TokenManager.saveToken(response.token)
                 currentUser = response.record
                 isSuccess = true
+                Log.d("AUTH","Токен сохранен")
             } catch (e: Exception) {
                 Log.e("AUTH", "Ошибка авторизации: ${e.message}")
                 errorMessage = "Неверный логин или пароль"

@@ -19,7 +19,7 @@ fun AppNavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = CartsRoute
+        startDestination = LoginRoute
     ) {
         composable<LoginRoute> {
             LoginScreen(
