@@ -56,6 +56,7 @@ class CartsViewModel : ViewModel() {
             try {
                 val token = TokenManager.getToken()
                 val current = editableCart
+
                 if (token != null && current != null) {
                     val updatedCart = current.copy(total = newTotal)
                     RetrofitClient.cartService.updateCart(token, id, updatedCart)

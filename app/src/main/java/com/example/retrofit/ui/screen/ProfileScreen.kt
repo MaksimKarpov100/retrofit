@@ -2,10 +2,14 @@ package com.example.retrofit.ui.screen
 
 import android.Manifest
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -31,16 +35,19 @@ fun ProfileScreen(
 
     var avatarFile by remember {
         mutableStateOf(
-            File(context.filesDir, "avatars").listFiles()?.maxByOrNull { it.lastModified() }
+            File(
+                context.filesDir,
+                "avatars"
+            ).listFiles()?.maxByOrNull { it.lastModified() }
         )
     }
 
     val openCamera = rememberCameraAction(
         permission = Manifest.permission.CAMERA
     ) { savedFile ->
+        avatarFile?.delete()
         avatarFile = savedFile
     }
-
 
     Column(
         modifier = Modifier
@@ -86,6 +93,38 @@ fun ProfileScreen(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(30.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 21.dp)
+                .height(127.dp)
+                .shadow(
+                    elevation = 16.dp,
+                    shape = RoundedCornerShape(8.dp),
+                    ambientColor = Color(0xFF8A959E).copy(alpha = 0.20f),
+                    spotColor = Color(0xFF8A959E).copy(alpha = 0.20f)
+                )
+                .background(Color.White, RoundedCornerShape(8.dp))
+                .clip(RoundedCornerShape(8.dp))
+                .padding(horizontal = 20.dp, vertical = 15.dp)
+        ) {
+            SecondaryText(
+                text = "Shipping address",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF303030)
+            )
+
+            Spacer(modifier = Modifier.height(22.dp))
+            SecondaryText(
+                text =  "25 rue Robert Latouche, Nice, 06200, Côte D’azur, France",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color(0xFF808080)
+            )
+        }
     }
 }
 
@@ -94,7 +133,13 @@ fun ProfileScreen(
 private fun ProfileScreenPreview() {
     RetrofitTheme {
         ProfileScreen(
-            user = UserRecord("Bruno", "Smith", "bruno203@gmail.com", "", "")
+            user = UserRecord(
+                "Bruno",
+                "Smith",
+                "bruno203@gmail.com",
+                "",
+                ""
+            ),
         )
     }
 }
