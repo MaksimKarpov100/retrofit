@@ -4,7 +4,9 @@ import com.example.retrofit.data.model.AuthResponse
 import com.example.retrofit.data.model.LoginRequest
 import com.example.retrofit.data.model.UserRecord
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface AuthService {
     @POST("users/auth-with-password")

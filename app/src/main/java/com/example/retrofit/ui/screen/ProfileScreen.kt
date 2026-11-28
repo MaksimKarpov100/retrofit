@@ -2,9 +2,6 @@ package com.example.retrofit.ui.screen
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.location.Geocoder
-import android.location.LocationManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,8 +24,10 @@ import com.example.retrofit.ui.components.text.SecondaryText
 import com.example.retrofit.ui.theme.RetrofitTheme
 import com.example.retrofit.utils.rememberCameraAction
 import com.example.retrofit.utils.rememberPermissionAction
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import java.io.File
-import java.util.Locale
 
 @Composable
 fun ProfileScreen(
@@ -37,14 +36,14 @@ fun ProfileScreen(
     onLogoutClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
+    var addressText by remember { mutableStateOf("") }
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
 
     var avatarFile by remember {
         mutableStateOf(
             File(context.filesDir, "avatars").listFiles()?.maxByOrNull { it.lastModified() }
         )
     }
-
-    var addressText by remember { mutableStateOf("") }
 
     val openCamera = rememberCameraAction(
         permission = Manifest.permission.CAMERA
@@ -60,28 +59,18 @@ fun ProfileScreen(
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
     ) {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        val lastLocation = locationManager.getLastKnownLocation(LocationManager.FUSED_PROVIDER)
-        if (lastLocation != null) {
-            Geocoder(context, Locale.getDefault())
-                .getFromLocation(lastLocation.latitude, lastLocation.longitude, 1) { addresses ->
-                    addressText = addresses.firstOrNull()?.getAddressLine(0)
-                        ?: "${lastLocation.latitude}, ${lastLocation.longitude}"
-                }
-        }
-
-        locationManager.getCurrentLocation(
-            LocationManager.FUSED_PROVIDER,
-            null,
-            context.mainExecutor
-        ) { loc ->
+        fusedLocationClient.getCurrentLocation(
+            Priority.PRIORITY_HIGH_ACCURACY,
+            CancellationTokenSource().token
+        ).addOnSuccessListener { loc ->
             if (loc != null) {
-                Geocoder(context, Locale.getDefault())
-                    .getFromLocation(loc.latitude, loc.longitude, 1) { addresses ->
-                        addressText = addresses.firstOrNull()?.getAddressLine(0)
-                            ?: "${loc.latitude}, ${loc.longitude}"
+                addressText = "${loc.latitude}, ${loc.longitude}"
+            } else {
+                fusedLocationClient.lastLocation.addOnSuccessListener { lastLoc ->
+                    if (lastLoc != null) {
+                        addressText = "${lastLoc.latitude}, ${lastLoc.longitude}"
                     }
+                }
             }
         }
     }

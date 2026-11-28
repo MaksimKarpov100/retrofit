@@ -58,7 +58,7 @@ fun AppNavGraph() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = CartsRoute,
+            startDestination = LoginRoute,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable<LoginRoute> {

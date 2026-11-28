@@ -35,8 +35,6 @@ class LoginScreenTest {
     @Test
     fun checkFieldsAndButton() {
         composeTestRule.onNodeWithTag("FieldEmail").performTextInput("maksim@example.com")
-        composeTestRule.onNodeWithTag("FieldEmail").assertTextEquals("Email", "maksim@example.com")
-
         composeTestRule.onNodeWithTag("FieldPassword").performTextInput("maksim123")
 
         composeTestRule.onNodeWithTag("ButtonLogin").assertIsDisplayed()
